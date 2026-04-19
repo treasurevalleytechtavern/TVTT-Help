@@ -1,0 +1,559 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>For Venues | Treasure Valley Tech Tavern</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700;800&family=Bebas+Neue&family=Inter:wght@400;700;800&family=Staatliches&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --tvtt-bg: #000;
+      --tvtt-panel: #070707;
+      --tvtt-text: #f4f6f7;
+      --tvtt-muted: #e6e6e6;
+      --tvtt-cyan: #63e0e5;
+      --tvtt-red: #ff1637;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--tvtt-bg);
+      color: var(--tvtt-text);
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+    }
+
+    .tvtt-venues-page {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: #000;
+    }
+
+    .tvtt-site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      width: 100%;
+      min-height: 86px;
+      padding: 12px 42px;
+      background: #171717;
+      border-bottom: 1px solid rgba(99, 224, 229, 0.3);
+      backdrop-filter: blur(12px);
+    }
+
+    .tvtt-site-logo {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+    }
+
+    .tvtt-site-logo img {
+      display: block;
+      width: 148px;
+      height: auto;
+    }
+
+    .tvtt-site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 24px;
+    }
+
+    .tvtt-site-nav a {
+      color: var(--tvtt-text);
+      font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+      font-size: 1.05rem;
+      font-weight: 800;
+      line-height: 1;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .tvtt-site-nav a:hover,
+    .tvtt-site-nav a:focus-visible,
+    .tvtt-site-nav a[aria-current="page"] {
+      color: var(--tvtt-cyan);
+    }
+
+    .tvtt-site-nav a:focus-visible,
+    .tvtt-venue-help-button:focus-visible {
+      outline: 2px solid var(--tvtt-cyan);
+      outline-offset: 6px;
+    }
+
+    .tvtt-venue-help {
+      background: #000;
+      color: #fff;
+      padding: 70px 20px;
+    }
+
+    .tvtt-venue-help-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .tvtt-venue-help-title {
+      margin: 0 0 42px;
+      color: #fff;
+      font-family: "Barlow Condensed", "Arial Narrow", Arial, sans-serif;
+      font-size: clamp(48px, 8vw, 78px);
+      font-weight: 800;
+      line-height: 0.95;
+      letter-spacing: 0;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .tvtt-venue-help-intro,
+    .tvtt-venue-help-section {
+      max-width: 800px;
+      margin: 0 auto 70px;
+      text-align: left;
+    }
+
+    .tvtt-venue-help-intro {
+      margin-bottom: 76px;
+    }
+
+    .tvtt-venue-help h2,
+    .tvtt-venue-help h3,
+    .tvtt-venue-help h4,
+    .tvtt-venue-help h5 {
+      text-align: center;
+    }
+
+    .tvtt-venue-help h3 {
+      margin: 0 0 24px;
+      color: #63e0e5;
+      font-family: "Bebas Neue", Impact, "Arial Narrow", sans-serif;
+      font-size: clamp(34px, 5vw, 48px);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .tvtt-venue-help h4 {
+      margin: 0 0 18px;
+      color: #63e0e5;
+      font-family: "Bebas Neue", Impact, "Arial Narrow", sans-serif;
+      font-size: 38px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .tvtt-venue-help h5 {
+      margin: 0 0 12px;
+      color: #63e0e5;
+      font-family: "Bebas Neue", Impact, "Arial Narrow", sans-serif;
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .tvtt-venue-help p,
+    .tvtt-venue-help li {
+      color: #e6e6e6;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+    }
+
+    .tvtt-venue-help p {
+      margin: 0 0 18px;
+    }
+
+    .tvtt-venue-help ul {
+      max-width: 620px;
+      margin: 0 0 24px 16px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tvtt-venue-help li {
+      position: relative;
+      margin-bottom: 13px;
+      padding-left: 34px;
+      text-align: left;
+    }
+
+    .tvtt-venue-help li::before {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #63e0e5;
+      content: "";
+    }
+
+    .tvtt-venue-help-packages {
+      margin: 0 auto;
+      text-align: left;
+    }
+
+    .tvtt-venue-help-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: auto auto auto auto;
+      gap: 24px;
+      align-items: stretch;
+      margin-top: 34px;
+    }
+
+    .tvtt-venue-help-card {
+      display: grid;
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+      padding: 30px 24px;
+      border: 1px solid rgba(99, 224, 229, 0.35);
+      border-radius: 8px;
+      background: #070707;
+      text-align: left;
+    }
+
+    .tvtt-venue-help-card-top {
+      padding-bottom: 24px;
+    }
+
+    .tvtt-venue-help-card-lead {
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .tvtt-venue-help-includes {
+      padding-top: 24px;
+      border-top: 1px solid rgba(99, 224, 229, 0.35);
+    }
+
+    .tvtt-venue-help-includes ul {
+      margin-bottom: 0;
+    }
+
+    .tvtt-venue-help-best {
+      margin-top: 24px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(99, 224, 229, 0.35);
+    }
+
+    .tvtt-venue-help-best p {
+      margin-bottom: 0;
+    }
+
+    .tvtt-venue-help-card-action {
+      display: flex;
+      align-items: end;
+      padding-top: 24px;
+    }
+
+    .tvtt-venue-help-card-action .tvtt-venue-help-button {
+      width: 100%;
+    }
+
+    .tvtt-venue-help-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      min-height: 46px;
+      padding: 0 22px;
+      border: 1px solid #63e0e5;
+      border-radius: 8px;
+      color: #000;
+      background: #63e0e5;
+      font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Arial, sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .tvtt-venue-help-button:hover,
+    .tvtt-venue-help-button:focus {
+      color: #63e0e5;
+      background: transparent;
+    }
+
+    .tvtt-venue-seo {
+      max-width: 900px;
+      margin: 56px auto 0;
+      color: #8b9499;
+      font-size: 13px;
+      line-height: 1.7;
+      text-align: left;
+    }
+
+    .tvtt-venue-seo p {
+      margin: 0;
+      color: inherit;
+      font-size: inherit;
+      line-height: inherit;
+    }
+
+    @media (max-width: 1100px) {
+      .tvtt-venue-help-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+        max-width: 720px;
+        margin-right: auto;
+        margin-left: auto;
+      }
+
+      .tvtt-venue-help-card {
+        display: block;
+        grid-row: auto;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .tvtt-site-header {
+        flex-direction: column;
+        gap: 14px;
+        min-height: 0;
+        padding: 12px 16px 16px;
+      }
+
+      .tvtt-site-logo img {
+        width: 122px;
+      }
+
+      .tvtt-site-nav {
+        justify-content: center;
+        gap: 12px 18px;
+      }
+
+      .tvtt-site-nav a {
+        font-size: 0.95rem;
+      }
+
+      .tvtt-venue-help {
+        padding: 54px 18px;
+      }
+
+      .tvtt-venue-help-title {
+        margin-bottom: 34px;
+      }
+
+      .tvtt-venue-help-intro,
+      .tvtt-venue-help-section {
+        margin-bottom: 54px;
+      }
+
+      .tvtt-venue-help-card {
+        padding: 30px 22px;
+      }
+
+      .tvtt-venue-help-card-top {
+        padding-bottom: 24px;
+      }
+
+      .tvtt-venue-help-includes {
+        padding-top: 24px;
+      }
+
+      .tvtt-venue-help-best {
+        margin-top: 24px;
+      }
+
+      .tvtt-venue-help-card-action {
+        padding-top: 24px;
+      }
+
+      .tvtt-venue-help-button {
+        min-height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="tvtt-venues-page">
+    <header class="tvtt-site-header">
+      <a class="tvtt-site-logo" href="index.html" aria-label="Treasure Valley Tech Tavern home">
+        <img src="tvtt-phone-logo.png" alt="Treasure Valley Tech Tavern">
+      </a>
+      <nav class="tvtt-site-nav" aria-label="Main navigation">
+        <a href="https://treasurevalleytechtavern.com/for-bands">For Bands</a>
+        <a href="for-venues.html" aria-current="page">For Venues</a>
+        <a href="https://treasurevalleytechtavern.com/about">About Us</a>
+      </nav>
+    </header>
+
+    <section class="tvtt-venue-help">
+      <div class="tvtt-venue-help-inner">
+        <h1 class="tvtt-venue-help-title">How We Help</h1>
+
+        <div class="tvtt-venue-help-intro">
+          <h3>If someone is deciding where to go tonight, will they find you?</h3>
+
+          <p>That's really what this comes down to.</p>
+
+          <p>Most bars are doing the hard part already. Running nights. Hosting events. Showing up every day.</p>
+
+          <p>But online, things get messy fast.</p>
+
+          <p>Schedules live in posts. Stories disappear. Pages exist, but don't clearly say what's happening.</p>
+
+          <p>So when someone is trying to figure out where to go... they either don't find you, or they don't understand why they should.</p>
+
+          <p>That's the gap we help close.</p>
+        </div>
+
+        <div class="tvtt-venue-help-section">
+          <h3>We Start With Where You Already Are</h3>
+
+          <p>Every venue is in a different place.</p>
+
+          <p>Some have a strong regular crowd but don't show up online. Some post, but it's inconsistent. Some are active, but it's hard to tell what's happening on any given night.</p>
+
+          <p>So we start by taking a look at what you already have.</p>
+
+          <ul>
+            <li>Where your information actually lives</li>
+            <li>Whether people can find you when they try</li>
+            <li>What it feels like landing on your pages for the first time</li>
+          </ul>
+
+          <p>Then we clean up what's getting in the way and give you a clear direction forward.</p>
+
+          <p>No pressure. Just a starting point.</p>
+        </div>
+
+        <div class="tvtt-venue-help-section">
+          <h3>Let's Get You Set Up</h3>
+
+          <p>Not every venue needs the same level of help.</p>
+
+          <p>Some just need things cleaned up. Some need someone capturing what's happening. Some want it handled so they don't have to think about it at all.</p>
+
+          <p>Here's how that usually looks.</p>
+        </div>
+
+        <div class="tvtt-venue-help-packages">
+          <div class="tvtt-venue-help-grid">
+            <article class="tvtt-venue-help-card">
+              <div class="tvtt-venue-help-card-top">
+                <h4>Setup</h4>
+
+                <p class="tvtt-venue-help-card-lead">Get everything clear so people can actually find you and know what's happening.</p>
+
+                <p>We take a look at what you already have and clean it up so it works the way it should, so someone new can understand your space without guessing.</p>
+              </div>
+
+              <div class="tvtt-venue-help-includes">
+                <h5>Includes</h5>
+
+                <ul>
+                  <li>Review of your pages, including Instagram, Facebook, Google, website, and more</li>
+                  <li>Fixing incorrect hours, links, or missing information</li>
+                  <li>Clear weekly schedule setup so people know what's happening each night</li>
+                  <li>Bio and profile clarity, including what you are, what you do, and what nights matter</li>
+                  <li>Basic organization like a link hub or simple mobile-friendly page</li>
+                  <li>Google Business cleanup and optimization</li>
+                  <li>Up to 10 QR table or bar inserts, sized 3x5 or 4x6</li>
+                  <li>Clear recommendations on what to do next</li>
+                </ul>
+              </div>
+
+              <div class="tvtt-venue-help-best">
+                <h5>Best For</h5>
+                <p>Bars that feel scattered, are hard to find, or where people don't know what's happening.</p>
+              </div>
+
+              <div class="tvtt-venue-help-card-action">
+                <a class="tvtt-venue-help-button" href="https://treasurevalleytechtavern.com/for-venues-setup">Fix My Setup</a>
+              </div>
+            </article>
+
+            <article class="tvtt-venue-help-card">
+              <div class="tvtt-venue-help-card-top">
+                <h4>In The Room</h4>
+
+                <p class="tvtt-venue-help-card-lead">Capture what your space actually feels like.</p>
+
+                <p>We show up and capture real moments as they're happening, and give you content you can use to represent your bar the way it actually is.</p>
+              </div>
+
+              <div class="tvtt-venue-help-includes">
+                <h5>Includes</h5>
+
+                <ul>
+                  <li>On-site content capture through short visits, not full-night coverage</li>
+                  <li>Footage of crowd, vibe, bartenders, events, and atmosphere</li>
+                  <li>Short-form video clips ready for Instagram, TikTok, and more</li>
+                  <li>Light editing to keep things clean and usable</li>
+                  <li>Organized delivery so you can post it yourself</li>
+                  <li>Content that reflects real energy, not staged or overproduced</li>
+                </ul>
+              </div>
+
+              <div class="tvtt-venue-help-best">
+                <h5>Best For</h5>
+                <p>Bars that want content but don't have time, or someone, to capture it.</p>
+              </div>
+
+              <div class="tvtt-venue-help-card-action">
+                <a class="tvtt-venue-help-button" href="https://treasurevalleytechtavern.com/for-venues-in-the-room">Come Capture Our Space</a>
+              </div>
+            </article>
+
+            <article class="tvtt-venue-help-card">
+              <div class="tvtt-venue-help-card-top">
+                <h4>All Hands</h4>
+
+                <p class="tvtt-venue-help-card-lead">We're in it with you, capturing, posting, and keeping you visible.</p>
+
+                <p>We handle both sides: creating content and making sure it actually gets out into the world consistently.</p>
+              </div>
+
+              <div class="tvtt-venue-help-includes">
+                <h5>Includes</h5>
+
+                <ul>
+                  <li>Everything from Setup and In the Room</li>
+                  <li>Content captured at your space on a consistent schedule</li>
+                  <li>Turned into short-form posts and scheduled out</li>
+                  <li>Posting across Instagram, TikTok, Facebook, and more</li>
+                  <li>Captions, tagging, and formatting handled</li>
+                  <li>Ongoing schedule updates and visibility support</li>
+                  <li>Featured on our page when applicable to help promote your space</li>
+                </ul>
+              </div>
+
+              <div class="tvtt-venue-help-best">
+                <h5>Best For</h5>
+                <p>Bars that want to stay active online without having to manage it day-to-day.</p>
+              </div>
+
+              <div class="tvtt-venue-help-card-action">
+                <a class="tvtt-venue-help-button" href="https://treasurevalleytechtavern.com/for-venues-all-hands">Handle It For Us</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="tvtt-venue-seo" aria-label="Treasure Valley venue support">
+          <p>Treasure Valley Tech Tavern supports bars and venues in Boise and across the Treasure Valley by keeping the digital side of things from getting lost in the shuffle. Schedules, events, social posts, Google listings, what's happening tonight and why it matters. Most of it already exists, it just isn't easy to find or doesn't tell the full story. We help you show up on platforms like Instagram, TikTok, Facebook, and Google in a way that actually reflects your space, whether that's a dive bar with weekly karaoke, a neighborhood spot with regulars, or a venue bringing in touring bands. Based in Boise and working throughout Meridian, Nampa, Eagle, Kuna, and beyond, we focus on making sure that when someone is looking for something to do, they find you, understand you, and choose you.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
