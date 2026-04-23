@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Overland Bar | Treasure Valley Tech Tavern</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chicle&family=Cute+Font&family=Jersey+15&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --tvtt-bg: #000;
+      --tvtt-panel: #0b0f10;
+      --tvtt-panel-2: #111617;
+      --tvtt-text: #f4f6f7;
+      --tvtt-muted: #dbe3e7;
+      --tvtt-soft: #9aa7ae;
+      --tvtt-cyan: #63e0e5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top, rgba(99, 224, 229, 0.1), transparent 32%),
+        linear-gradient(180deg, rgba(99, 224, 229, 0.05), transparent 220px),
+        var(--tvtt-bg);
+      color: var(--tvtt-text);
+      font-family: "Cute Font", Arial, sans-serif;
+    }
+
+    .tvtt-page {
+      min-height: 100vh;
+      overflow-x: hidden;
+      padding-top: 106px;
+    }
+
+    .tvtt-site-header {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      min-height: 86px;
+      padding: 12px 42px;
+      background: rgba(17, 17, 17, 0.94);
+      border-bottom: 1px solid rgba(99, 224, 229, 0.3);
+      backdrop-filter: blur(12px);
+    }
+
+    .tvtt-site-logo {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+    }
+
+    .tvtt-site-logo img {
+      display: block;
+      width: 148px;
+      height: auto;
+    }
+
+    .tvtt-site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 24px;
+    }
+
+    .tvtt-site-nav a,
+    .tvtt-site-footer-nav a {
+      color: var(--tvtt-text);
+      font-family: "Chicle", Arial, sans-serif;
+      font-size: 1.25rem;
+      line-height: 1;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .tvtt-site-nav a:hover,
+    .tvtt-site-nav a:focus-visible,
+    .tvtt-site-footer-nav a:hover,
+    .tvtt-site-footer-nav a:focus-visible {
+      color: var(--tvtt-cyan);
+    }
+
+    .tvtt-site-nav a:focus-visible,
+    .tvtt-case-button:focus-visible {
+      outline: 2px solid var(--tvtt-cyan);
+      outline-offset: 6px;
+    }
+
+    .tvtt-hero {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 34px 20px 34px;
+      text-align: center;
+    }
+
+    .tvtt-hero-logo {
+      display: block;
+      width: min(100%, 300px);
+      height: auto;
+      margin: 0 auto 12px;
+    }
+
+    .tvtt-hero-location {
+      margin: 0;
+      color: var(--tvtt-soft);
+      font-family: "Chicle", Arial, sans-serif;
+      font-size: 1.15rem;
+      line-height: 1.1;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .tvtt-casework {
+      padding: 10px 20px 84px;
+    }
+
+    .tvtt-casework-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .tvtt-case-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .tvtt-case-card {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 100%;
+      border: 1px solid rgba(99, 224, 229, 0.32);
+      border-radius: 10px;
+      background:
+        linear-gradient(180deg, rgba(99, 224, 229, 0.08), transparent 180px),
+        var(--tvtt-panel);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+    }
+
+    .tvtt-case-media {
+      position: relative;
+      min-height: 290px;
+      background-color: #0d1112;
+      background-position: center top;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .tvtt-case-media::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.24)),
+        linear-gradient(180deg, transparent 0%, rgba(0, 0, 0, 0.54) 100%);
+    }
+
+    .tvtt-case-body {
+      display: flex;
+      flex: 1 1 auto;
+      flex-direction: column;
+      padding: 28px 26px 30px;
+    }
+
+    .tvtt-case-label {
+      margin: 0 0 18px;
+      color: var(--tvtt-cyan);
+      font-family: "Jersey 15", Arial, sans-serif;
+      font-size: clamp(2.6rem, 5vw, 3.6rem);
+      font-weight: 400;
+      line-height: 1;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .tvtt-case-copy p {
+      margin: 0 0 18px;
+      color: var(--tvtt-muted);
+      font-size: 1.9rem;
+      line-height: 1.36;
+    }
+
+    .tvtt-case-action {
+      margin-top: auto;
+      padding-top: 12px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .tvtt-case-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 24px;
+      border: 1px solid var(--tvtt-cyan);
+      border-radius: 8px;
+      color: #000;
+      background: var(--tvtt-cyan);
+      font-size: 1.8rem;
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .tvtt-case-button:hover,
+    .tvtt-case-button:focus {
+      color: var(--tvtt-cyan);
+      background: transparent;
+    }
+
+    .tvtt-site-footer {
+      padding: 28px 16px 34px;
+      border-top: 1px solid rgba(99, 224, 229, 0.22);
+      background: #0b0b0b;
+    }
+
+    .tvtt-site-footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px 24px;
+      margin: 0 auto;
+      max-width: 980px;
+    }
+
+    .tvtt-site-footer-copy {
+      margin: 18px 0 0;
+      color: var(--tvtt-soft);
+      font-size: 1.35rem;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .tvtt-site-header {
+        flex-direction: column;
+        gap: 14px;
+        min-height: 0;
+        padding: 12px 16px 16px;
+      }
+
+      .tvtt-page {
+        padding-top: 144px;
+      }
+
+      .tvtt-site-logo img {
+        width: 122px;
+      }
+
+      .tvtt-site-nav {
+        justify-content: center;
+        gap: 12px 18px;
+      }
+
+      .tvtt-site-nav a,
+      .tvtt-site-footer-nav a {
+        font-size: 1.1rem;
+      }
+
+      .tvtt-case-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .tvtt-case-media {
+        min-height: 220px;
+      }
+
+      .tvtt-case-button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="tvtt-page">
+    <header class="tvtt-site-header">
+      <a class="tvtt-site-logo" href="https://treasurevalleytechtavern.com" aria-label="Treasure Valley Tech Tavern home">
+        <img src="../tvtt-phone-logo.png" alt="Treasure Valley Tech Tavern">
+      </a>
+      <nav class="tvtt-site-nav" aria-label="Main navigation">
+        <a href="https://treasurevalleytechtavern.com">Home</a>
+        <a href="https://help.treasurevalleytechtavern.com/how-we-help">How We Help</a>
+        <a href="https://help.treasurevalleytechtavern.com/for-bands">For Bands</a>
+        <a href="https://help.treasurevalleytechtavern.com/for-places">For Bars &amp; Venues</a>
+        <a href="https://clips.treasurevalleytechtavern.com">Clips</a>
+        <a href="https://treasurevalleytechtavern.com/about">About Us</a>
+      </nav>
+    </header>
+
+    <section class="tvtt-hero">
+      <img class="tvtt-hero-logo" src="./overland-bar-logo.png" alt="Overland Bar logo">
+      <p class="tvtt-hero-location">Boise Bench, Boise, Idaho</p>
+    </section>
+
+    <section class="tvtt-casework">
+      <div class="tvtt-casework-inner">
+        <div class="tvtt-case-grid">
+          <article class="tvtt-case-card">
+            <div class="tvtt-case-media" style="background-image: url('https://img1.wsimg.com/isteam/ip/4388d291-5fcc-409d-8363-e903dee11150/Screenshot%202026-04-12%20020507.png/:/cr=t:0%25,l:0%25,w:100%25,h:96.99%25/rs=w:600,h:451,cg:true');" aria-hidden="true"></div>
+            <div class="tvtt-case-body">
+              <h1 class="tvtt-case-label">Website</h1>
+              <div class="tvtt-case-copy">
+                <p>We built and manage Overland Bar&apos;s website end-to-end, keeping it simple, current, and reflective of what&apos;s actually happening in the bar.</p>
+                <p>The main page gives a clear overview of what Overland offers, while individual sections are designed to be genuinely useful. The karaoke page makes it easy for people to tip KJs, and the menu stays updated as drinks change.</p>
+                <p>The goal is not just to have a website, but to have one that people can actually use and understand without digging.</p>
+              </div>
+              <div class="tvtt-case-action">
+                <a class="tvtt-case-button" href="https://overlandbar.com">Visit Overland Bar&apos;s Website</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="tvtt-case-card">
+            <div class="tvtt-case-media" style="background-image: url('https://img1.wsimg.com/isteam/ip/4388d291-5fcc-409d-8363-e903dee11150/Screenshot%202026-04-12%20020624.png/:/cr=t:0%25,l:0%25,w:100%25,h:90.75%25/rs=w:600,h:451,cg:true');" aria-hidden="true"></div>
+            <div class="tvtt-case-body">
+              <h1 class="tvtt-case-label">TikTok</h1>
+              <div class="tvtt-case-copy">
+                <p>We created and manage Overland Bar&apos;s TikTok, posting daily clips that capture real moments from the bar.</p>
+                <p>Starting from zero, the account has grown to over 1,100 followers and 200K+ views in the last 60 days, with most views coming through the For You page and reaching a strong local audience.</p>
+                <p>People are engaging with the content, recognizing the bar, and even mentioning it directly to the owner.</p>
+              </div>
+              <div class="tvtt-case-action">
+                <a class="tvtt-case-button" href="https://www.tiktok.com/@overlandbar">View Overland Bar On TikTok</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <footer class="tvtt-site-footer">
+      <nav class="tvtt-site-footer-nav" aria-label="Footer">
+        <a href="https://treasurevalleytechtavern.com">Home</a>
+        <a href="https://help.treasurevalleytechtavern.com/how-we-help">How We Help</a>
+        <a href="https://help.treasurevalleytechtavern.com/for-bands">For Bands</a>
+        <a href="https://help.treasurevalleytechtavern.com/for-places">For Bars &amp; Venues</a>
+        <a href="https://clips.treasurevalleytechtavern.com">Clips</a>
+        <a href="https://treasurevalleytechtavern.com/about">About Us</a>
+      </nav>
+      <p class="tvtt-site-footer-copy">Copyright &copy; 2026 Treasure Valley Tech Tavern - Boise, Idaho - All Rights Reserved.</p>
+    </footer>
+  </main>
+</body>
+</html>

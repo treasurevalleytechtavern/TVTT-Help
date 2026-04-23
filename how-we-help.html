@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How We Help | Treasure Valley Tech Tavern</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chicle&family=Cute+Font&family=Jersey+15&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --tvtt-bg: #000;
+      --tvtt-panel: #070707;
+      --tvtt-panel-2: #111;
+      --tvtt-text: #f4f6f7;
+      --tvtt-muted: #dbe3e7;
+      --tvtt-soft: #aeb7bd;
+      --tvtt-cyan: #63e0e5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top, rgba(99, 224, 229, 0.12), transparent 32%),
+        linear-gradient(180deg, rgba(99, 224, 229, 0.05), transparent 220px),
+        var(--tvtt-bg);
+      color: var(--tvtt-text);
+      font-family: "Cute Font", Arial, sans-serif;
+    }
+
+    .tvtt-help-page {
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .tvtt-site-header {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      width: 100%;
+      min-height: 86px;
+      padding: 12px 42px;
+      background: rgba(17, 17, 17, 0.94);
+      border-bottom: 1px solid rgba(99, 224, 229, 0.3);
+      backdrop-filter: blur(12px);
+    }
+
+    .tvtt-site-logo {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+    }
+
+    .tvtt-site-logo img {
+      display: block;
+      width: 148px;
+      height: auto;
+    }
+
+    .tvtt-site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 24px;
+    }
+
+    .tvtt-site-nav a,
+    .tvtt-site-footer-nav a {
+      color: var(--tvtt-text);
+      font-family: "Chicle", Arial, sans-serif;
+      font-size: 1.25rem;
+      line-height: 1;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .tvtt-site-nav a:hover,
+    .tvtt-site-nav a:focus-visible,
+    .tvtt-site-nav a[aria-current="page"],
+    .tvtt-site-footer-nav a:hover,
+    .tvtt-site-footer-nav a:focus-visible {
+      color: var(--tvtt-cyan);
+    }
+
+    .tvtt-site-nav a:focus-visible,
+    .tvtt-help-button:focus-visible {
+      outline: 2px solid var(--tvtt-cyan);
+      outline-offset: 6px;
+    }
+
+    .tvtt-help {
+      padding: 72px 20px 84px;
+    }
+
+    .tvtt-help-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .tvtt-help-intro {
+      max-width: 820px;
+      margin: 0 auto 64px;
+      text-align: center;
+    }
+
+    .tvtt-help h2 {
+      margin: 0 0 28px;
+      color: #fff;
+      font-family: "Jersey 15", Arial, sans-serif;
+      font-size: clamp(42px, 7vw, 64px);
+      font-weight: 400;
+      line-height: 0.95;
+      text-transform: uppercase;
+    }
+
+    .tvtt-help-column h3,
+    .tvtt-help-column h4,
+    .tvtt-help-recent-name {
+      font-family: "Jersey 15", Arial, sans-serif;
+      font-weight: 400;
+      line-height: 1;
+      text-transform: uppercase;
+    }
+
+    .tvtt-help-column h3 {
+      margin: 0 0 28px;
+      color: var(--tvtt-cyan);
+      font-size: clamp(2.9rem, 6vw, 4.1rem);
+      text-align: center;
+    }
+
+    .tvtt-help-column h4 {
+      margin: 0 0 16px;
+      color: #fff;
+      font-size: 2.3rem;
+      text-align: left;
+    }
+
+    .tvtt-help-intro p,
+    .tvtt-help-column p,
+    .tvtt-help-column li {
+      color: var(--tvtt-muted);
+      font-size: 1.9rem;
+      line-height: 1.36;
+    }
+
+    .tvtt-help-intro p {
+      margin: 0 0 18px;
+    }
+
+    .tvtt-help strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .tvtt-help-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      grid-template-rows: auto auto auto auto auto auto;
+      gap: 32px;
+      align-items: stretch;
+    }
+
+    .tvtt-help-column {
+      display: grid;
+      grid-row: span 6;
+      grid-template-rows: subgrid;
+      padding: 34px 30px;
+      border: 1px solid rgba(99, 224, 229, 0.35);
+      border-radius: 10px;
+      background:
+        linear-gradient(180deg, rgba(99, 224, 229, 0.08), transparent 200px),
+        var(--tvtt-panel);
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+    }
+
+    .tvtt-help-block {
+      padding: 24px 22px;
+      border: 1px solid rgba(99, 224, 229, 0.18);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    .tvtt-help-column p {
+      margin: 0 0 18px;
+    }
+
+    .tvtt-help-column ul {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tvtt-help-column li {
+      position: relative;
+      margin-bottom: 14px;
+      padding-left: 26px;
+    }
+
+    .tvtt-help-column li::before {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: 0;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--tvtt-cyan);
+    }
+
+    .tvtt-help-action {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-top: 4px;
+    }
+
+    .tvtt-help-action-bottom {
+      padding-top: 20px;
+    }
+
+    .tvtt-help-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 50px;
+      padding: 0 22px;
+      border: 1px solid var(--tvtt-cyan);
+      border-radius: 8px;
+      color: #000;
+      background: var(--tvtt-cyan);
+      font-size: 1.8rem;
+      font-weight: 700;
+      line-height: 1;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .tvtt-help-button:hover,
+    .tvtt-help-button:focus {
+      color: var(--tvtt-cyan);
+      background: transparent;
+    }
+
+    .tvtt-help-recent {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding: 26px 0 0;
+      border-top: 1px solid rgba(99, 224, 229, 0.35);
+      text-align: center;
+    }
+
+    .tvtt-help-recent-name {
+      margin: 0 0 16px;
+      color: var(--tvtt-cyan);
+      font-size: 2.5rem;
+    }
+
+    .tvtt-site-footer {
+      padding: 28px 16px 34px;
+      border-top: 1px solid rgba(99, 224, 229, 0.22);
+      background: #0b0b0b;
+    }
+
+    .tvtt-site-footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 16px 24px;
+      margin: 0 auto;
+      max-width: 980px;
+    }
+
+    .tvtt-site-footer-copy {
+      margin: 18px 0 0;
+      color: var(--tvtt-soft);
+      font-size: 1.35rem;
+      line-height: 1.1;
+      text-align: center;
+    }
+
+    @media (max-width: 900px) {
+      .tvtt-site-header {
+        flex-direction: column;
+        gap: 14px;
+        min-height: 0;
+        padding: 12px 16px 16px;
+      }
+
+      .tvtt-site-logo img {
+        width: 122px;
+      }
+
+      .tvtt-site-nav {
+        justify-content: center;
+        gap: 12px 18px;
+      }
+
+      .tvtt-site-nav a,
+      .tvtt-site-footer-nav a {
+        font-size: 1.1rem;
+      }
+
+      .tvtt-help-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+        gap: 28px;
+      }
+
+      .tvtt-help-column {
+        display: block;
+        grid-row: auto;
+        padding: 30px 22px;
+      }
+
+      .tvtt-help-block {
+        margin-bottom: 28px;
+      }
+
+      .tvtt-help-button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="tvtt-help-page">
+    <header class="tvtt-site-header">
+      <a class="tvtt-site-logo" href="https://treasurevalleytechtavern.com" aria-label="Treasure Valley Tech Tavern home">
+        <img src="tvtt-phone-logo.png" alt="Treasure Valley Tech Tavern">
+      </a>
+      <nav class="tvtt-site-nav" aria-label="Main navigation">
+        <a href="https://treasurevalleytechtavern.com">Home</a>
+        <a href="how-we-help.html" aria-current="page">How We Help</a>
+        <a href="for-bands.html">For Bands</a>
+        <a href="for-places.html">For Bars &amp; Venues</a>
+        <a href="https://clips.treasurevalleytechtavern.com">Clips</a>
+        <a href="https://treasurevalleytechtavern.com/about">About Us</a>
+      </nav>
+    </header>
+
+    <section class="tvtt-help">
+      <div class="tvtt-help-inner">
+        <div class="tvtt-help-intro">
+          <h2>Making the Treasure Valley scene easier to find, follow, and show up for</h2>
+          <p>Most people in the Treasure Valley want to support local bands and venues.</p>
+          <p>They just do not know where to start.</p>
+          <p>They will hear a band name and try to look them up and find nothing clear.</p>
+          <p>They will look for something to do on a weekend and miss shows that are already happening.</p>
+          <p>Most of what people see are the big touring acts coming through, while the local scene, the regular nights, and the smaller shows stay harder to find.</p>
+          <p>Not because the scene is not active, but because it is <strong>hard to find unless you are already part of it.</strong></p>
+          <p>That is the gap we focus on.</p>
+          <p>Treasure Valley Tech Tavern acts as a <strong>digital stagehand for the scene</strong>, making sure what is happening in real life actually shows up online.</p>
+          <p>Not everything here has to apply to you. We build around what you actually need and ignore what you do not.</p>
+        </div>
+
+        <div class="tvtt-help-grid">
+          <article class="tvtt-help-column">
+            <h3>For Bands</h3>
+
+            <div class="tvtt-help-block tvtt-help-problem">
+              <h4>What Is Getting In The Way</h4>
+              <ul>
+                <li>People hear your name but cannot find you</li>
+                <li>Your shows are not listed in one clear place</li>
+                <li>Your socials do not reflect how active you actually are</li>
+                <li>You have content, but it is scattered, unposted, or lost</li>
+                <li>Every platform works differently, and it is hard to keep up</li>
+              </ul>
+            </div>
+
+            <div class="tvtt-help-block tvtt-help-solution">
+              <h4>How We Help</h4>
+              <p>We help you get organized, visible, and easy to follow without having to think about every platform.</p>
+              <ul>
+                <li>Set up a clean home base, like a site or link hub</li>
+                <li>Make sure your shows are easy to find</li>
+                <li>Align your socials so everything points to the right place</li>
+                <li>Capture real moments from live shows, practice, and the in-between</li>
+                <li>Shape and post that content across Instagram, TikTok, YouTube, and Facebook in a way that fits each platform</li>
+              </ul>
+              <p>We handle how things show up online so you can focus on making music and playing shows.</p>
+            </div>
+
+            <div class="tvtt-help-action">
+              <a class="tvtt-help-button" href="https://help.treasurevalleytechtavern.com/for-bands">Built for bands</a>
+            </div>
+
+            <div class="tvtt-help-recent">
+              <h4>Recent Work</h4>
+              <p class="tvtt-help-recent-name">Oathbound</p>
+              <p>Oathbound is a Seattle-based progressive metalcore band touring across the western US. Their sound sits somewhere between precision and emotion... heavy, melodic, and intentional... and their live shows reflect that same balance. We keep their website updated so fans can find tour dates, music, and the latest from the band in one place.</p>
+            </div>
+
+            <div class="tvtt-help-action tvtt-help-action-bottom">
+              <a class="tvtt-help-button" href="https://oathboundband.com">See Our Work</a>
+            </div>
+          </article>
+
+          <article class="tvtt-help-column">
+            <h3>For Bars &amp; Venues</h3>
+
+            <div class="tvtt-help-block tvtt-help-problem">
+              <h4>What Is Getting In The Way</h4>
+              <ul>
+                <li>What is happening this week is not obvious unless someone already knows</li>
+                <li>Your schedule is spread across posts, stories, or not clearly listed at all</li>
+                <li>Your socials feel inconsistent or quiet</li>
+                <li>New customers do not understand your vibe before they walk in</li>
+                <li>Posting regularly across platforms takes time you do not have</li>
+              </ul>
+            </div>
+
+            <div class="tvtt-help-block tvtt-help-solution">
+              <h4>How We Help</h4>
+              <p>We help you stay clear, active, and easy to walk into without needing to manage it day to day.</p>
+              <ul>
+                <li>Clean up and align your online presence</li>
+                <li>Make your weekly schedule clear and easy to find</li>
+                <li>Set up a simple, mobile-friendly site or page</li>
+                <li>Optimize your Google listing so people can actually find you</li>
+                <li>Capture the energy of your space and turn it into content</li>
+                <li>Post and schedule that content across Instagram, TikTok, Facebook, and YouTube so your pages stay active</li>
+              </ul>
+              <p>We handle the platforms and the posting so your space stays visible without constant effort.</p>
+            </div>
+
+            <div class="tvtt-help-action">
+              <a class="tvtt-help-button" href="https://help.treasurevalleytechtavern.com/for-places">Built for bars &amp; venues</a>
+            </div>
+
+            <div class="tvtt-help-recent">
+              <h4>Recent Work</h4>
+              <p class="tvtt-help-recent-name">Overland Bar</p>
+              <p>Overland Bar is a neighborhood staple on the Boise Bench... karaoke every night, familiar faces, and the kind of place people come back to because it feels like theirs. It&apos;s not trying to be trendy. It just works. We translate what the room feels like into something people can find online.</p>
+            </div>
+
+            <div class="tvtt-help-action tvtt-help-action-bottom">
+              <a class="tvtt-help-button" href="https://help.treasurevalleytechtavern.com/overland-bar">See Our Work</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <footer class="tvtt-site-footer">
+      <nav class="tvtt-site-footer-nav" aria-label="Footer">
+        <a href="https://treasurevalleytechtavern.com">Home</a>
+        <a href="how-we-help.html">How We Help</a>
+        <a href="for-bands.html">For Bands</a>
+        <a href="for-places.html">For Bars &amp; Venues</a>
+        <a href="https://clips.treasurevalleytechtavern.com">Clips</a>
+        <a href="https://treasurevalleytechtavern.com/about">About Us</a>
+      </nav>
+      <p class="tvtt-site-footer-copy">Copyright &copy; 2026 Treasure Valley Tech Tavern - Boise, Idaho - All Rights Reserved.</p>
+    </footer>
+  </main>
+</body>
+</html>
