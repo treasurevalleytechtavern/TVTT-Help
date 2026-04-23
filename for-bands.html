@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>For Bands | Treasure Valley Tech Tavern</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chicle&family=Cute+Font&family=Jersey+15&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      color-scheme: dark;
+      --tvtt-bg: #000;
+      --tvtt-panel: #070707;
+      --tvtt-text: #f4f6f7;
+      --tvtt-muted: #e6e6e6;
+      --tvtt-cyan: #63e0e5;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--tvtt-bg);
+      color: var(--tvtt-text);
+      font-family: "Cute Font", Arial, sans-serif;
+    }
+
+    .tvtt-bands-page {
+      min-height: 100vh;
+      overflow-x: hidden;
+      background: #000;
+      padding-top: 86px;
+    }
+
+    .tvtt-site-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 30;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 28px;
+      width: 100%;
+      min-height: 86px;
+      padding: 12px 42px;
+      background: #171717;
+      border-bottom: 1px solid rgba(99, 224, 229, 0.3);
+      backdrop-filter: blur(12px);
+    }
+
+    .tvtt-site-logo {
+      display: inline-flex;
+      flex: 0 0 auto;
+      align-items: center;
+    }
+
+    .tvtt-site-logo img {
+      display: block;
+      width: 148px;
+      height: auto;
+    }
+
+    .tvtt-site-nav {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: flex-end;
+      gap: 24px;
+    }
+
+    .tvtt-site-nav a {
+      color: var(--tvtt-text);
+      font-family: "Chicle", Arial, sans-serif;
+      font-size: 1.35rem;
+      font-weight: 400;
+      line-height: 1;
+      text-decoration: none;
+      text-transform: uppercase;
+    }
+
+    .tvtt-site-nav a:hover,
+    .tvtt-site-nav a:focus-visible,
+    .tvtt-site-nav a[aria-current="page"] {
+      color: var(--tvtt-cyan);
+    }
+
+    .tvtt-site-nav a:focus-visible,
+    .tvtt-band-help-button:focus-visible {
+      outline: 2px solid var(--tvtt-cyan);
+      outline-offset: 6px;
+    }
+
+    .tvtt-band-help {
+      position: relative;
+      background: #000;
+      color: #fff;
+      padding: 150px 20px 70px;
+      overflow: hidden;
+    }
+
+    .tvtt-band-help-media {
+      position: fixed;
+      top: 86px;
+      right: 0;
+      left: 0;
+      z-index: 0;
+      height: calc(100vh - 86px);
+      overflow: hidden;
+      pointer-events: none;
+      background:
+        linear-gradient(180deg, rgba(0, 0, 0, 0.28), rgba(0, 0, 0, 0.5)),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.04) 44%, rgba(0, 0, 0, 0.16)),
+        #070707;
+    }
+
+    .tvtt-band-help-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .tvtt-band-help-intro,
+    .tvtt-band-help-section {
+      max-width: 800px;
+      margin: 0 auto 70px;
+      text-align: left;
+    }
+
+    .tvtt-band-help-intro {
+      margin-bottom: 76px;
+    }
+
+    .tvtt-band-help h2,
+    .tvtt-band-help h3,
+    .tvtt-band-help h4,
+    .tvtt-band-help h5 {
+      text-align: center;
+    }
+
+    .tvtt-band-help h2 {
+      margin: 0 0 28px;
+      color: #fff;
+      font-family: "Jersey 15", Arial, sans-serif;
+      font-size: clamp(42px, 7vw, 64px);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .tvtt-band-help h3 {
+      margin: 0 0 24px;
+      color: #63e0e5;
+      font-family: "Jersey 15", Arial, sans-serif;
+      font-size: clamp(34px, 5vw, 48px);
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .tvtt-band-help h4 {
+      margin: 0 0 18px;
+      color: #fff;
+      font-family: "Jersey 15", Arial, sans-serif;
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .tvtt-band-help h5 {
+      margin: 0 0 12px;
+      color: #63e0e5;
+      font-family: "Jersey 15", Arial, sans-serif;
+      font-size: 24px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0;
+      text-transform: uppercase;
+    }
+
+    .tvtt-band-help p,
+    .tvtt-band-help li {
+      color: #e6e6e6;
+      font-family: "Cute Font", Arial, sans-serif;
+      font-size: 28px;
+      line-height: 1.5;
+    }
+
+    .tvtt-band-help p {
+      margin: 0 0 18px;
+    }
+
+    .tvtt-band-help ul {
+      max-width: 620px;
+      margin: 0 0 24px;
+      padding: 0;
+      list-style: none;
+    }
+
+    .tvtt-band-help li {
+      position: relative;
+      margin-bottom: 13px;
+      padding-left: 34px;
+      text-align: left;
+    }
+
+    .tvtt-band-help li::before {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #63e0e5;
+    }
+
+    .tvtt-band-help-packages {
+      margin: 0 auto 70px;
+      text-align: left;
+    }
+
+    .tvtt-band-help-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-rows: auto auto auto auto;
+      gap: 24px;
+      align-items: stretch;
+      margin-top: 34px;
+    }
+
+    .tvtt-band-help-card {
+      display: grid;
+      grid-row: span 4;
+      grid-template-rows: subgrid;
+      padding: 30px 24px;
+      border: 1px solid rgba(99, 224, 229, 0.35);
+      border-radius: 8px;
+      background: #070707;
+      text-align: left;
+    }
+
+    .tvtt-band-help-card h4 {
+      color: #63e0e5;
+      font-size: 38px;
+    }
+
+    .tvtt-band-help-card-lead {
+      color: #fff;
+      font-weight: 800;
+    }
+
+    .tvtt-band-help-card-top {
+      padding-bottom: 24px;
+    }
+
+    .tvtt-band-help-includes {
+      padding-top: 24px;
+      border-top: 1px solid rgba(99, 224, 229, 0.35);
+    }
+
+    .tvtt-band-help-includes ul {
+      margin-bottom: 0;
+    }
+
+    .tvtt-band-help-best {
+      margin-top: 24px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(99, 224, 229, 0.35);
+    }
+
+    .tvtt-band-help-best p {
+      margin-bottom: 0;
+    }
+
+    .tvtt-band-help-card-action {
+      display: flex;
+      align-items: end;
+      padding-top: 24px;
+    }
+
+    .tvtt-band-help-card-action .tvtt-band-help-button {
+      width: 100%;
+      margin-top: 0;
+    }
+
+    .tvtt-band-help-highlight {
+      padding: 34px 30px;
+      border: 1px solid rgba(99, 224, 229, 0.35);
+      border-radius: 8px;
+      background: #070707;
+    }
+
+    .tvtt-band-help-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: min(100%, 360px);
+      min-height: 46px;
+      padding: 0 22px;
+      border: 1px solid #63e0e5;
+      border-radius: 8px;
+      color: #000;
+      background: #63e0e5;
+      font-family: "Cute Font", Arial, sans-serif;
+      font-size: 27px;
+      font-weight: 700;
+      line-height: 1.2;
+      text-align: center;
+      text-decoration: none;
+    }
+
+    .tvtt-band-help-button:hover,
+    .tvtt-band-help-button:focus {
+      color: #63e0e5;
+      background: transparent;
+    }
+
+    @media (max-width: 1100px) {
+      .tvtt-band-help-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: none;
+      }
+
+      .tvtt-band-help-card {
+        display: block;
+        grid-row: auto;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .tvtt-bands-page {
+        padding-top: 126px;
+      }
+
+      .tvtt-site-header {
+        flex-direction: column;
+        gap: 14px;
+        min-height: 0;
+        padding: 12px 16px 16px;
+      }
+
+      .tvtt-site-logo img {
+        width: 122px;
+      }
+
+      .tvtt-site-nav {
+        justify-content: center;
+        gap: 12px 18px;
+      }
+
+      .tvtt-site-nav a {
+        font-size: 1.15rem;
+      }
+
+      .tvtt-band-help {
+        padding: 168px 18px 54px;
+      }
+
+      .tvtt-band-help-media {
+        top: 110px;
+        height: calc(100vh - 110px);
+      }
+
+      .tvtt-band-help-intro,
+      .tvtt-band-help-section {
+        margin-bottom: 54px;
+      }
+
+      .tvtt-band-help-grid {
+        grid-template-columns: 1fr;
+        gap: 28px;
+      }
+
+      .tvtt-band-help-card {
+        padding: 30px 22px;
+      }
+
+      .tvtt-band-help-card-top {
+        padding-bottom: 24px;
+      }
+
+      .tvtt-band-help-includes {
+        padding-top: 24px;
+      }
+
+      .tvtt-band-help-best {
+        margin-top: 24px;
+      }
+
+      .tvtt-band-help-card-action {
+        padding-top: 24px;
+      }
+
+      .tvtt-band-help-highlight {
+        padding: 30px 22px;
+      }
+
+      .tvtt-band-help-button {
+        width: 100%;
+        max-width: 360px;
+        min-height: 44px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="tvtt-bands-page">
+    <header class="tvtt-site-header">
+      <a class="tvtt-site-logo" href="https://treasurevalleytechtavern.com" aria-label="Treasure Valley Tech Tavern home">
+        <img src="tvtt-phone-logo.png" alt="Treasure Valley Tech Tavern">
+      </a>
+      <nav class="tvtt-site-nav" aria-label="Main navigation">
+        <a href="https://treasurevalleytechtavern.com">Home</a>
+        <a href="for-bands" aria-current="page">For Bands</a>
+        <a href="for-places">For Bars &amp; Venues</a>
+        <a href="https://clips.treasurevalleytechtavern.com">Clips</a>
+        <a href="https://treasurevalleytechtavern.com/about">About Us</a>
+      </nav>
+    </header>
+
+    <section class="tvtt-band-help">
+      <div class="tvtt-band-help-media" aria-hidden="true"></div>
+      <div class="tvtt-band-help-inner">
+        <div class="tvtt-band-help-intro">
+          <h2>How We Help</h2>
+          <h3>If someone hears your name tonight, will they be able to find you tomorrow?</h3>
+          <p>That's really what this comes down to.</p>
+          <p>Most bands are doing the hard part already. Playing shows. Writing music. Showing up.</p>
+          <p>But online, things get messy fast.</p>
+          <p>Links break. Content sits in phones. Pages exist, but don't really lead anywhere.</p>
+          <p>So when someone tries to look you up after a show, they either don't find you... or they don't stick around.</p>
+          <p>That's the gap we help close.</p>
+        </div>
+
+        <div class="tvtt-band-help-section">
+          <h3>We Start With Where You Already Are</h3>
+          <p>Every band is in a different place.</p>
+          <p>Some have content but it's scattered. Some are active but hard to find. Some are just getting started.</p>
+          <p>So we start by taking a look at what you already have.</p>
+          <ul>
+            <li>Where your content actually lives</li>
+            <li>Whether people can find you when they try</li>
+            <li>What it feels like landing on your pages for the first time</li>
+          </ul>
+          <p>Then we clean up what's getting in the way and give you a clear direction forward.</p>
+          <p>No pressure. Just a starting point.</p>
+        </div>
+
+        <div class="tvtt-band-help-section">
+          <h3>Let's Get You Set Up</h3>
+          <p>Not every band needs the same level of help.</p>
+          <p>Some just need things cleaned up. Some need help staying active. Some need someone there capturing what's happening. Some want to hand it off completely.</p>
+          <p>Here's how that usually looks.</p>
+        </div>
+
+        <div class="tvtt-band-help-packages">
+          <h3>Let Us Help You</h3>
+          <div class="tvtt-band-help-grid">
+            <article class="tvtt-band-help-card">
+              <div class="tvtt-band-help-card-top">
+                <h4>Load-In</h4>
+                <p class="tvtt-band-help-card-lead">Get everything set up so people can actually find you.</p>
+                <p>We take a look at what you already have and clean it up so it works the way it should.</p>
+              </div>
+              <div class="tvtt-band-help-includes">
+                <h5>Includes</h5>
+                <ul>
+                  <li>Review of your pages, including Instagram, TikTok, website, and more</li>
+                  <li>Fixing broken or missing links</li>
+                  <li>Bio and profile clarity</li>
+                  <li>Basic organization, like a link hub or pinned content</li>
+                  <li>Clear recommendations on what to do next</li>
+                </ul>
+              </div>
+              <div class="tvtt-band-help-best">
+                <h5>Best For</h5>
+                <p>Bands that feel scattered, hard to find, or not sure what's working.</p>
+              </div>
+              <div class="tvtt-band-help-card-action">
+                <a class="tvtt-band-help-button" href="https://treasurevalleytechtavern.com/for-bands-load-in">Fix My Setup</a>
+              </div>
+            </article>
+
+            <article class="tvtt-band-help-card">
+              <div class="tvtt-band-help-card-top">
+                <h4>Backline</h4>
+                <p class="tvtt-band-help-card-lead">Keep your socials running without thinking about it.</p>
+                <p>You already have content. We make sure it actually gets posted and seen.</p>
+              </div>
+              <div class="tvtt-band-help-includes">
+                <h5>Includes</h5>
+                <ul>
+                  <li>Posting 2 to 4 times per week</li>
+                  <li>Captions, tagging, and formatting</li>
+                  <li>Scheduling across platforms</li>
+                  <li>Light repurposing of existing content</li>
+                  <li>Story posts around shows and announcements</li>
+                </ul>
+              </div>
+              <div class="tvtt-band-help-best">
+                <h5>Best For</h5>
+                <p>Bands who have content but don't post consistently.</p>
+              </div>
+              <div class="tvtt-band-help-card-action">
+                <a class="tvtt-band-help-button" href="https://treasurevalleytechtavern.com/for-bands-backline" target="_blank">Keep Me Posting</a>
+              </div>
+            </article>
+
+            <article class="tvtt-band-help-card">
+              <div class="tvtt-band-help-card-top">
+                <h4>Camera Op</h4>
+                <p class="tvtt-band-help-card-lead">Capture what's actually happening.</p>
+                <p>We show up and film your band in real moments so you actually have content to use.</p>
+              </div>
+              <div class="tvtt-band-help-includes">
+                <h5>Includes</h5>
+                <ul>
+                  <li>Live show footage</li>
+                  <li>Practice and behind-the-scenes clips</li>
+                  <li>Short-form ready video clips</li>
+                  <li>Organized delivery so you can post it yourself</li>
+                </ul>
+              </div>
+              <div class="tvtt-band-help-best">
+                <h5>Best For</h5>
+                <p>Bands who don't have enough content or don't want to deal with filming.</p>
+              </div>
+              <div class="tvtt-band-help-card-action">
+                <a class="tvtt-band-help-button" href="https://treasurevalleytechtavern.com/for-bands-camera-ops" target="_blank">Come Film Us</a>
+              </div>
+            </article>
+
+            <article class="tvtt-band-help-card">
+              <div class="tvtt-band-help-card-top">
+                <h4>Road Crew</h4>
+                <p class="tvtt-band-help-card-lead">We're in it with you. Capturing, posting, and keeping you visible.</p>
+                <p>We handle both sides. Creating content and keeping your pages active.</p>
+              </div>
+              <div class="tvtt-band-help-includes">
+                <h5>Includes</h5>
+                <ul>
+                  <li>Everything from Camera Op and Backline</li>
+                  <li>Content captured at shows or practice</li>
+                  <li>Turned into posts and scheduled consistently</li>
+                  <li>Posted across your platforms</li>
+                  <li>Featured on our page to help promote you</li>
+                </ul>
+              </div>
+              <div class="tvtt-band-help-best">
+                <h5>Best For</h5>
+                <p>Bands who want to focus on playing and not deal with the internet.</p>
+              </div>
+              <div class="tvtt-band-help-card-action">
+                <a class="tvtt-band-help-button" href="https://treasurevalleytechtavern.com/for-bands-roadcrew" target="_blank">Handle Everything</a>
+              </div>
+            </article>
+          </div>
+        </div>
+
+        <div class="tvtt-band-help-section tvtt-band-help-highlight">
+          <h3>Optional: Digital Setup And Distribution</h3>
+          <p>Make sure everything connects behind the scenes.</p>
+          <p>This is the stuff most bands don't think about until something breaks.</p>
+          <h4>We Can Help With</h4>
+          <ul>
+            <li>Bandsintown setup and show syncing</li>
+            <li>Music release support through TuneCore, DistroKid, and more</li>
+            <li>Musixmatch lyric setup</li>
+            <li>Linktree or Carrd organization</li>
+            <li>Platform alignment across Spotify, YouTube, and more</li>
+          </ul>
+          <p>Available with any package. Often bundled into Road Crew when needed.</p>
+        </div>
+
+        <div class="tvtt-band-help-section">
+          <h3>How We Approach This</h3>
+          <p>We're not here to turn your band into a production set.</p>
+          <p>We use lightweight gear so we can actually move with the moment and not slow it down.</p>
+          <p>Live shows. Practice sessions. The in-between moments that make your band feel like you.</p>
+          <p>The goal is not to make you look different. It's to make sure people actually see what's already there.</p>
+        </div>
+
+        <div class="tvtt-band-help-section">
+          <h3>We're Part Of This Scene Too</h3>
+          <p>This started as a passion project and it still feels like one. But we take showing up for people seriously.</p>
+          <p>We're not trying to over-polish anything. We're not trying to turn local music into a content machine.</p>
+          <p>We just want:</p>
+          <ul>
+            <li>Bands to be easier to find</li>
+            <li>Shows to feel alive online</li>
+            <li>The local scene to actually connect</li>
+          </ul>
+          <p>You make the noise. We'll handle the internet.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
