@@ -16,7 +16,7 @@
       --tvtt-text: #f4f6f7;
       --tvtt-muted: #e6e6e6;
       --tvtt-cyan: #63e0e5;
-      --tvtt-header-offset: 122px;
+      --tvtt-header-height: 86px;
     }
 
     * {
@@ -34,7 +34,7 @@
       min-height: 100vh;
       overflow-x: hidden;
       background: #000;
-      padding-top: var(--tvtt-header-offset);
+      padding-top: var(--tvtt-header-height);
     }
 
     .tvtt-site-header {
@@ -175,11 +175,11 @@
 
     .tvtt-band-help-media {
       position: fixed;
-      top: var(--tvtt-header-offset);
+      top: var(--tvtt-header-height);
       right: 0;
       left: 0;
       z-index: 0;
-      height: calc(100vh - var(--tvtt-header-offset));
+      height: calc(100vh - var(--tvtt-header-height));
       overflow: hidden;
       pointer-events: none;
       background:
@@ -523,7 +523,7 @@
 
     @media (max-width: 700px) {
       .tvtt-bands-page {
-        padding-top: 126px;
+        padding-top: var(--tvtt-header-height);
       }
 
       .tvtt-band-help {
@@ -531,8 +531,8 @@
       }
 
       .tvtt-band-help-media {
-        top: 126px;
-        height: calc(100vh - 126px);
+        top: var(--tvtt-header-height);
+        height: calc(100vh - var(--tvtt-header-height));
       }
 
       .tvtt-band-help-intro,
@@ -806,15 +806,30 @@
       const toggle = header.querySelector(".tvtt-site-nav-toggle");
       const nav = header.querySelector(".tvtt-site-nav");
       const mobileQuery = window.matchMedia("(max-width: 960px)");
+      const root = document.documentElement;
 
       if (!toggle || !nav) {
         return;
       }
 
+      function syncHeaderHeight() {
+        root.style.setProperty("--tvtt-header-height", header.getBoundingClientRect().height + "px");
+      }
+
       function closeMenu() {
         header.classList.remove("is-open");
         toggle.setAttribute("aria-expanded", "false");
+        syncHeaderHeight();
       }
+
+      syncHeaderHeight();
+
+      if (typeof ResizeObserver !== "undefined") {
+        const observer = new ResizeObserver(syncHeaderHeight);
+        observer.observe(header);
+      }
+
+      window.addEventListener("resize", syncHeaderHeight);
 
       toggle.addEventListener("click", function () {
         const isOpen = toggle.getAttribute("aria-expanded") === "true";
@@ -826,6 +841,7 @@
 
         header.classList.add("is-open");
         toggle.setAttribute("aria-expanded", "true");
+        syncHeaderHeight();
       });
 
       nav.querySelectorAll("a").forEach(function (link) {
@@ -845,7 +861,10 @@
       mobileQuery.addEventListener("change", function (event) {
         if (!event.matches) {
           closeMenu();
+          return;
         }
+
+        syncHeaderHeight();
       });
     }());
   </script>
