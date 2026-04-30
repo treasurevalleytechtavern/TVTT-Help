@@ -57,6 +57,8 @@
       justify-content: space-between;
       gap: 28px;
       min-height: 61px;
+      width: min(100%, 1480px);
+      margin: 0 auto;
     }
 
     .tvtt-site-logo {
@@ -67,7 +69,7 @@
 
     .tvtt-site-logo img {
       display: block;
-      width: 148px;
+      width: 132px;
       height: auto;
     }
 
@@ -210,12 +212,13 @@
     }
 
     .tvtt-venue-help-title {
-      margin: 0 0 42px;
+      max-width: 860px;
+      margin: 0 auto 34px;
       color: #fff;
       font-family: "Jersey 15", Arial, sans-serif;
-      font-size: clamp(48px, 8vw, 78px);
+      font-size: clamp(40px, 6.4vw, 64px);
       font-weight: 400;
-      line-height: 0.95;
+      line-height: 1;
       letter-spacing: 0;
       text-align: center;
     }
@@ -474,7 +477,7 @@
       }
 
       .tvtt-site-logo img {
-        width: 122px;
+        width: 110px;
       }
 
       .tvtt-site-nav-toggle {
@@ -534,7 +537,9 @@
       }
 
       .tvtt-venue-help-title {
-        margin-bottom: 34px;
+        margin-bottom: 28px;
+        font-size: clamp(34px, 10vw, 48px);
+        line-height: 0.98;
       }
 
       .tvtt-venue-help-intro,
@@ -580,8 +585,8 @@
           <span class="tvtt-site-nav-toggle-icon" aria-hidden="true"></span>
         </button>
         <nav class="tvtt-site-nav" id="site-navigation" aria-label="Main navigation">
-          <ul class="tvtt-site-nav-list">
-            <li><a href="https://treasurevalleytechtavern.com">Home</a></li>
+                              <ul class="tvtt-site-nav-list">
+            <li><a href="https://help.treasurevalleytechtavern.com">Home</a></li>
             <li><a href="https://help.treasurevalleytechtavern.com/for-bands/">For Bands</a></li>
             <li><a href="https://help.treasurevalleytechtavern.com/for-places/" aria-current="page">For Bars &amp; Venues</a></li>
             <li><a href="https://clips.treasurevalleytechtavern.com">Clips</a></li>
@@ -765,9 +770,8 @@
     </section>
 
     <footer class="tvtt-site-footer">
-      <nav class="tvtt-site-footer-nav" aria-label="Footer">
+                  <nav class="tvtt-site-footer-nav" aria-label="Footer">
         <a href="https://treasurevalleytechtavern.com">Home</a>
-        <a href="https://help.treasurevalleytechtavern.com">How We Help</a>
         <a href="https://clips.treasurevalleytechtavern.com">Clips</a>
         <a href="https://places.treasurevalleytechtavern.com">Places</a>
         <a href="https://treasurevalleytechtavern.com/about">About Us</a>
